@@ -29,31 +29,31 @@ class Node {
 // {13, 0, 7, 6, 21, 15, -2, 12, 99, 18, 19, -1}
 Node* createTree() {
 	// root
-	Node *root = 13;
+	Node* root = new Node(13);
 
 	// level 1 (children of root)
-	root->left = 0:
-	root->right = 21;
+	root->left = new Node(0);
+	root->right = new Node(21);
 
 	// level 2 (children of 0)
-	root->left->left = -2;
-	root->left->right = 7;
+	root->left->left = new Node(-2);
+	root->left->right = new Node(7);
 	
 	// level 2 (children of 21)
-	root->right->left = 15;
-	root->right->right = 99;
+	root->right->left = new Node(15);
+	root->right->right = new Node(99);
 
 	// level 3 (children of -2)
-	root->left->left->left = -1;
+	root->left->left->left = new Node(-1);
 	root->left->left->right = nullptr;
 
 	// level 3 (children of 7)
-	root->left->right->left = 6;
-	root->left->right->right = 12;
+	root->left->right->left = new Node(6);
+	root->left->right->right = new Node(12);
 
 	// level 3 (children of 15)
 	root->right->left->left = nullptr;
-	root->right->left->right = 18;
+	root->right->left->right = new Node(18);
 
 	// level 3 (children of 99)
 	root->right->right->left = nullptr;
@@ -61,7 +61,7 @@ Node* createTree() {
 
 	// level 4 (children of 18)
 	root->right->left->right->left = nullptr;
-	root->right->left->right->right = 19;
+	root->right->left->right->right = new Node(19);
 
 	return root;
 }
@@ -75,7 +75,7 @@ bool searchTree(int target, Node* root) {
 	// Base cases
 	Node* current = root;
 	while (current != nullptr) {
-		if (current ->key == value){
+		if (current->key == value){
 			return true;
 		}
 		if (value < current->key) {
@@ -95,10 +95,13 @@ bool searchTree(int target, Node* root) {
 // You should write this function recursively!
 int treeSize(Node* root) {
 	// base case
-	return -1;
+	if (root == nullptr) {
+		return 0;
+	}
+	
 
 	// General case
-	return -1;
+	return 1 + treeSize(root->left) + treeSize(root->right);
 
 }
 
@@ -107,10 +110,15 @@ int treeSize(Node* root) {
 // A leaf is a node with no children.
 int countLeaves(Node* root) {
 	// base case
-	return -1;
+	if (root == nulptr) {
+		return 0;
+	}
 
 	// General case
-	return -1;
+	if (root->left == nullptr && root->right == nullptr) {
+		return 1;
+	}
+	return countLeaves(root->left) + countLeaves(root->right);
 }
 
 // BONUS! Write a function that will determine the height of the tree
